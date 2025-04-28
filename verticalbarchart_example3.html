@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Monthly Unit Sales Overview</title>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dimple/2.3.0/dimple.latest.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; }
+    #chartContainer { width: 600px; height: 400px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <h2>Monthly Unit Sales Overview Vertical Chart Example</h2>
+  <div id="chartContainer"></div>
+  
+  <script type="text/javascript">
+    var data = [
+      { "Month": "Jan", "Date": 1, "Unit Sales": 200 },
+      { "Month": "Feb", "Date": 2, "Unit Sales": 300 },
+      { "Month": "Mar", "Date": 3, "Unit Sales": 250 },
+      { "Month": "Apr", "Date": 4, "Unit Sales": 400 }
+    ];
+
+    var svg = dimple.newSvg("#chartContainer", 590, 400);
+    var myChart = new dimple.chart(svg, data);
+    myChart.setBounds(60, 30, 510, 305);
+    var x = myChart.addCategoryAxis("x", "Month");
+    x.addOrderRule("Date");
+    var y = myChart.addMeasureAxis("y", "Unit Sales");
+
+    var bars = myChart.addSeries(null, dimple.plot.bar);
+    
+    // Add tooltip for exact values
+    bars.getTooltipText = function (e) {
+      return ["Month: " + e.x, "Unit Sales: " + e.yValue];
+    };
+    
+    // Add colorful fills
+    bars.barGap = 0.3;
+    
+    myChart.draw();
+  </script>
+</body>
+</html>
+
